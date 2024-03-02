@@ -6,11 +6,12 @@ import glob
 
 def resize_images(input_folder, output_folder, new_width, new_height):
 	os.makedirs(output_folder, exist_ok=True)
+
 	for filename in glob.glob(os.path.join(input_folder, '*.jpg')):
 		img = cv2.imread(filename)
 		resized_image = cv2.resize(img, (new_width, new_height), interpolation=cv2.INTER_AREA)
 		
-		output_filename = output_folder +'/'+ filename[:-4] +'_resized.jpg'
+		output_filename = output_folder + '/' + (filename.split('/')[-1])[:-4] + '_resized.jpg'
 		cv2.imwrite(output_filename, resized_image)
 	print("Images Resized Succesfully")
 
@@ -31,7 +32,7 @@ def rotate_images(input_folder, output_folder, rotation_angle):
             print(f"Invalid rotation angle: {rotation_angle}. Skipping {filename}.")
             continue
 
-        output_filename = output_folder +'/'+ filename[:-4] +'_{}_rotated.jpg'.format(rotation_angle)
+        output_filename = output_folder + '/' + (filename.split('/')[-1])[:-4] + '_{}_rotated.jpg'.format(rotation_angle)
         cv2.imwrite(output_filename, rotated_image)
     print("Images Rotated Succesfully")    
 
@@ -61,10 +62,11 @@ input_path = os.getcwd() + "/Input_Images"
 preprocessed_path = os.getcwd() + "/Preprocessed_Images"
 
 
-#Download_img_CSV(csv_path,download_path)
+Download_img_CSV(csv_path,download_path)
 resize_images(download_path,input_path,300 ,300)
 resize_images(download_path,preprocessed_path,300 ,300)
 
 rotate_images(input_path, preprocessed_path, 90)
-rotate_images(input_path, preprocessed_path, 180)
-rotate_images(input_path, preprocessed_path, 270)
+# rotate_images(input_path, preprocessed_path, 180)
+# rotate_images(input_path, preprocessed_path, 270)
+
